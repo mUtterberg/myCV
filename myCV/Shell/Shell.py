@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# myCV
+# mycv
 # An interactive exploration of OpenCV-Python
 #-----------------------------------------------------------------------
 # This package is based on SimpleCV, by SightMachine.
@@ -28,7 +28,7 @@ import sys
 
 from myCV.__init__ import *
 
-#Load myCV libraries
+#Load mycv libraries
 from .Tutorial import *
 from .Example import *
 
@@ -37,6 +37,12 @@ try:
 except ImportError:
     MYCV_VERSION = ''
 
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    logger.warning("Matplotlib is not installed and required")
+
+import code
 
 #Command to clear the shell screen
 def shellclear():
@@ -55,16 +61,11 @@ def make_magic(method):
 
 
 def plot(arg):
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError:
-        logger.warning("Matplotlib is not installed and required")
-        return
-
     print("args", arg)
     print("type", type(arg))
     plt.plot(arg)
     plt.show()
+    return
 
 
 def hist(arg):
@@ -118,7 +119,7 @@ def setup_ipython():
     try:
         import IPython
         from IPython.config.loader import Config
-        from IPython.frontend.terminal.embed import InteractiveShellEmbed
+        from IPython.terminal.embed import InteractiveShellEmbed
 
         cfg = Config()
         cfg.PromptManager.in_template = "MyCV:\\#> "
@@ -168,8 +169,6 @@ def setup_bpython():
 
 
 def setup_plain():
-    import code
-
     return code.interact(banner=banner, local=globals())
 
 
@@ -199,7 +198,7 @@ def run_notebook(mainArgs):
 
 
 def self_update():
-    URL = "https://github.com/mutterberg/myCV/zipball/master"
+    URL = "https://github.com/mutterberg/mycv/zipball/master"
     command = "pip install -U %s" % URL
 
     if os.getuid() == 0:
